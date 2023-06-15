@@ -25,7 +25,6 @@
   border-radius: 5px;
   padding: 20px;
   margin: 20px auto 0;
-
 }
 
 .todo-head input {
@@ -45,7 +44,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 auto;
   width: 100%;
   max-width: 500px;
   background: #e2dddd;
@@ -53,7 +51,6 @@
   padding: 20px;
   margin: 20px auto;
   flex: 1;
-
 }
 
 .row-head {
@@ -62,7 +59,6 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-
 }
 
 .col-goal {
@@ -74,15 +70,11 @@
   width: 100%;
 }
 
-
-
 .row-head h2 {
   font-size: 25px;
   font-weight: 500;
   color: #575454;
-
 }
-
 
 .col-goal h3 {
   font-size: 18px;
@@ -104,7 +96,6 @@
   padding: 5px;
   flex: 1;
   border-radius: 30px;
-
 }
 
 .row-input {
@@ -119,20 +110,17 @@
 
 .add {
   width: 50%;
-
 }
 
 .add-task-button {
   border: none;
   outline: none;
   padding: 10px;
-  background: transparent;
   font-size: 10px;
   font-weight: 700;
   cursor: pointer;
   background: #f17c23;
   border-radius: 40px;
-
 }
 
 .row-todo {
@@ -149,7 +137,6 @@
   font-size: 25px;
   font-weight: 500;
   color: #575454;
-
 }
 
 .task-card {
@@ -165,7 +152,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
- 
 }
 
 .tasks {
@@ -177,7 +163,6 @@
 
 .tasks li {
   list-style: none;
-
 }
 
 .actions {
@@ -185,8 +170,6 @@
   flex-direction: row;
   align-items: center;
   padding-right: 10px;
-
-
 }
 
 .actions button {
@@ -194,11 +177,10 @@
   font-size: 30px;
   font-weight: 700;
   cursor: pointer;
-  background: transparent;
   width: 40px;
   height: 30px;
   align-items: center;
-  border: none
+  border: none;
 }
 
 .actions li {
