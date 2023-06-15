@@ -172,6 +172,26 @@ Eslint
 ```sh
      npm install --save-dev eslint@7.x eslint-config-airbnb-base@14.x eslint-plugin-import@2.x babel-eslint@10.x
 ```
+Webpack
+```sh
+     npm init -y
+     npm install webpack webpack-cli --save-dev
+```
+
+Webpack Css loader
+```sh
+     npm install --save-dev style-loader css-loader
+```
+
+Webpack html plugin
+```sh
+     npm install --save-dev html-webpack-plugin
+```
+
+Webpack dev server
+```sh
+     npm install --save-dev webpack-dev-server
+```
 
 
 
