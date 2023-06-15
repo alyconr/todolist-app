@@ -4,15 +4,18 @@ const path = require('path');
  module.exports = {
    mode: 'development',
    entry: {
-     index: './src/index.js'    
+     index: ['./src/index.js', './src/assets/css/style.css',],    
    },
    devtool: 'inline-source-map',
   devServer: {
     static: './dist',
+    hot: false,
+    liveReload: true,
   },
    plugins: [
      new HtmlWebpackPlugin({
-       title: 'Development',
+      template: './src/index.html',
+      inject: 'body',
      }),
    ],
    output: {
@@ -20,6 +23,36 @@ const path = require('path');
      path: path.resolve(__dirname, 'dist'),
      clean: true,
    },
+   module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name][ext]',
+        }, 
+      },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+        options: {
+          sources: {
+            list: [
+             {
+                tag: 'img',
+                attribute: 'src',
+                type: 'src',
+              },
+            ],
+          },
+        },
+      },
+    ],
+  },
   optimization: {
     runtimeChunk: 'single',
   },
