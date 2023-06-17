@@ -101,7 +101,7 @@ class TaskManager {
     const buttonDelete = document.createElement('button');
     buttonDelete.className = 'delete btn-actions';
     const imageDelete = document.createElement('img');
-    imageDelete.src = '/assets/images/icons8-borrar-para-siempre-48.png'; // Updated image path
+    imageDelete.src = '/assets/images/icons8-borrar-para-siempre-48.png';// Updated image path
     imageDelete.alt = 'button Delete';
     buttonDelete.appendChild(imageDelete);
     actionItemDelete.appendChild(buttonDelete);
