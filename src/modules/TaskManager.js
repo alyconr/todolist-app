@@ -3,12 +3,23 @@ class TaskManager {
     this.tasks = [];
     this.attachEventListeners();
     this.loadTask();
+    this.loadNameFromLocalStorage();
   }
+
+  saveNameToLocalStorage = (name) => { localStorage.setItem('name', name); };
+
+  loadNameFromLocalStorage = () => {
+    const nameInput = document.getElementById('input-name');
+    const savedName = localStorage.getItem('name');
+
+    if (savedName) {
+      nameInput.value = savedName;
+    }
+  };
 
   addTask = (event) => {
     event.preventDefault();
     const taskDescriptionInput = document.getElementById('taskDescription').value;
-
     if (taskDescriptionInput.trim() === '') {
       const alertMessage = document.getElementById('alertMessage');
       alertMessage.textContent = 'Please enter a description for the task.';
@@ -56,7 +67,7 @@ class TaskManager {
     const taskItem2Link = document.createElement('a');
     const taskItem2Image = document.createElement('img');
     taskItem2Image.className = 'unchecked';
-    taskItem2Image.src = '/assets/images/icons8-botón-de-radio-sin-marcar-48.png'; // Updated image path
+    taskItem2Image.src = 'assets/images/icons8-botón-de-radio-sin-marcar-48.png'; // Updated image path
     taskItem2Image.alt = 'unchecked';
     taskItem2Link.appendChild(taskItem2Image);
     taskItem2.appendChild(taskItem2Link);
@@ -64,13 +75,13 @@ class TaskManager {
     taskItem2Link.addEventListener('click', () => {
       if (taskItem2Image.classList.contains('unchecked')) {
         // Toggle to checked state
-        taskItem2Image.src = '/assets/images/icons8-ok-48.png'; // Updated image path
+        taskItem2Image.src = 'assets/images/icons8-ok-48.png'; // Updated image path
         taskItem2Image.alt = 'checked';
         taskItem2Image.classList.remove('unchecked');
         taskItem1.style.textDecoration = 'line-through';
       } else {
         // Toggle to unchecked state
-        taskItem2Image.src = '/assets/images/icons8-botón-de-radio-sin-marcar-48.png'; // Updated image path
+        taskItem2Image.src = 'assets/images/icons8-botón-de-radio-sin-marcar-48.png'; // Updated image path
         taskItem2Image.alt = 'unchecked';
         taskItem2Image.addEventListener('mouseover', () => {
           taskItem2Image.style.cursor = 'pointer';
@@ -90,7 +101,7 @@ class TaskManager {
     const buttonEdit = document.createElement('button');
     buttonEdit.className = 'btn-actions';
     const imageEdit = document.createElement('img');
-    imageEdit.src = '/assets/images/icons8-editar-48.png'; // Updated image path
+    imageEdit.src = 'assets/images/icons8-editar-48.png'; // Updated image path
     imageEdit.alt = 'button Edit';
     buttonEdit.appendChild(imageEdit);
     actionItemEdit.appendChild(buttonEdit);
@@ -101,7 +112,7 @@ class TaskManager {
     const buttonDelete = document.createElement('button');
     buttonDelete.className = 'delete btn-actions';
     const imageDelete = document.createElement('img');
-    imageDelete.src = '/assets/images/icons8-borrar-para-siempre-48.png';// Updated image path
+    imageDelete.src = 'assets/images/icons8-borrar-para-siempre-48.png'; // Updated image path
     imageDelete.alt = 'button Delete';
     buttonDelete.appendChild(imageDelete);
     actionItemDelete.appendChild(buttonDelete);
@@ -134,7 +145,7 @@ class TaskManager {
     saveButton.className = 'btn-actions';
     const saveImage = document.createElement('img');
     saveImage.style.width = '35px';
-    saveImage.src = '/assets/images/icons8-save-48.png';
+    saveImage.src = 'assets/images/icons8-save-48.png';
     saveImage.alt = 'button Save';
     saveButton.appendChild(saveImage);
     saveButton.addEventListener('click', () => this.saveTask(targetTask, taskDescription));
@@ -143,7 +154,7 @@ class TaskManager {
     cancelButton.className = 'btn-actions';
     const cancelImage = document.createElement('img');
     cancelImage.style.width = '35px';
-    cancelImage.src = '/assets/images/icons8-cancel-48.png';
+    cancelImage.src = 'assets/images/icons8-cancel-48.png';
     cancelImage.alt = 'button Cancel';
     cancelButton.appendChild(cancelImage);
     cancelButton.addEventListener('click', () => this.cancelTask(targetTask, taskDescription));
@@ -187,13 +198,12 @@ class TaskManager {
       this.saveTasktoLocalStorage();
     }
 
-    window.location.reload();
+    this.returnToTaskCard(targetTask, taskDescriptionText);
   };
 
   cancelTask = (targetTask, taskDescription) => {
     const taskDescriptionInput = taskDescription.querySelector('input');
     const taskDescriptionText = taskDescriptionInput.value;
-
     if (taskDescriptionText) {
       taskDescription.textContent = taskDescriptionText;
     } else {
@@ -206,7 +216,39 @@ class TaskManager {
         this.saveTasktoLocalStorage();
       }
     }
-    window.location.reload();
+    this.returnToTaskCard(targetTask, taskDescriptionText);
+  };
+
+  returnToTaskCard = (targetTask, taskDescriptionText) => {
+    const taskDescription = targetTask.querySelector('.tasks .list');
+    taskDescription.textContent = taskDescriptionText;
+
+    const actions = targetTask.querySelector('.actions');
+    actions.textContent = '';
+    const actionItemEdit = document.createElement('li');
+    actionItemEdit.className = 'li_actions';
+    const buttonEdit = document.createElement('button');
+    buttonEdit.className = 'btn-actions';
+    const imageEdit = document.createElement('img');
+    imageEdit.src = 'assets/images/icons8-editar-48.png';
+    imageEdit.alt = 'button Edit';
+    buttonEdit.appendChild(imageEdit);
+    actionItemEdit.appendChild(buttonEdit);
+    buttonEdit.addEventListener('click', (event) => this.editTask(event));
+
+    const actionItemDelete = document.createElement('li');
+    actionItemDelete.className = 'li_actions';
+    const buttonDelete = document.createElement('button');
+    buttonDelete.className = 'delete btn-actions';
+    const imageDelete = document.createElement('img');
+    imageDelete.src = 'assets/images/icons8-borrar-para-siempre-48.png';
+    imageDelete.alt = 'button Delete';
+    buttonDelete.appendChild(imageDelete);
+    actionItemDelete.appendChild(buttonDelete);
+    buttonDelete.addEventListener('click', () => this.deleteTask(targetTask, taskDescriptionText));
+
+    actions.appendChild(actionItemEdit);
+    actions.appendChild(actionItemDelete);
   };
 
   loadTask = () => {
@@ -230,6 +272,12 @@ class TaskManager {
       card.addEventListener('dragleave', this.dragLeave);
       card.addEventListener('drop', this.drop);
       card.addEventListener('dragend', this.dragEnd);
+    });
+
+    const nameInput = document.getElementById('input-name');
+    nameInput.addEventListener('input', (event) => {
+      const name = event.target.value;
+      this.saveNameToLocalStorage(name);
     });
   };
 
