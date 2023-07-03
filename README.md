@@ -193,7 +193,19 @@ Webpack dev server
      npm install --save-dev webpack-dev-server
 ```
 
+Minify CSS Webpack:  This is useful to reduce the size of  the CSS file to imporve the loading time
+```sh
+     npm install css-minimizer-webpack-plugin --save-dev
 
+```
+
+Split CSS:  Use the MiniCssExtractPlugin to extract the CSS into separate files. Splitting it into smaller modular files can help improve the loading time.
+
+```sh
+     npm install mini-css-extract-plugin --save-dev
+
+
+```
 
 ### Usage
 
